@@ -39,7 +39,7 @@ public class ProjectalScript : MonoBehaviour
             Debug.Log("time is up, fireball was destroyed!!");
             timeReset = 0;
             Destroy(gameObject);
-            Destroy(rigBody);
+           // Destroy(rigBody);
         }
     }
 
