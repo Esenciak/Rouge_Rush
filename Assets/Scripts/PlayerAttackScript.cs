@@ -18,7 +18,6 @@ public class PlayerAttackScript : MonoBehaviour
             Instantiate(projectile, projPos.position, projPos.rotation);
         }
 
-
         //spawn a projectal
             //where to spawn it
     }
