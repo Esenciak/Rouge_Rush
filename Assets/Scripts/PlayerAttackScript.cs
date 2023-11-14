@@ -8,6 +8,12 @@ public class PlayerAttackScript : MonoBehaviour
 
     public Transform projPos;
     public GameObject projectile;
+    public float speed = 2f;
+
+    void Start()
+    {
+        
+    }
 
     // Update is called once per frame
     void Update()
@@ -16,9 +22,11 @@ public class PlayerAttackScript : MonoBehaviour
         if(Input.GetMouseButton(0)) 
         {
             Instantiate(projectile, projPos.position, projPos.rotation);
+            
         }
+       
 
-        //spawn a projectal
-            //where to spawn it
     }
+
+    
 }

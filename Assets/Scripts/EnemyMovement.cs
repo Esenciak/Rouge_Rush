@@ -12,6 +12,8 @@ public class EnemyMovement : MonoBehaviour
 
     private float timer = 0;
     private float timerReset = 2f;
+
+    private float deadZone = 3;
     
 
     // Start is called before the first frame update
@@ -27,11 +29,13 @@ public class EnemyMovement : MonoBehaviour
         {
             timer = timer + Time.deltaTime;
             Movement();
+            
         }
         else
         {
-            timer = timer - Time.deltaTime;
+            Destroy(gameObject);
         }
+        
     }
 
 
