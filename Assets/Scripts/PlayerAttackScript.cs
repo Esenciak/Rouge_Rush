@@ -21,12 +21,23 @@ public class PlayerAttackScript : MonoBehaviour
         //player input to attack
         if(Input.GetMouseButton(0)) 
         {
-            Instantiate(projectile, projPos.position, projPos.rotation);
-            
+            shoot();
+
+
         }
        
 
     }
+    void shoot()
+    {
+        // create projectile
+        Instantiate(projectile, projPos.position, projPos.rotation);
+        // kierowanie w strone
+        Vector3 kierunek = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+        projectile.GetComponent<Rigidbody2D>().velocity = new Vector2(kierunek.x, kierunek.y) * speed * 2f;
 
+        // destroy projectile
+        //Destroy(projectile, 2f);
+    }
     
 }

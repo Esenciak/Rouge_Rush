@@ -31,7 +31,7 @@ public class ProjectalScript : MonoBehaviour
         {
             //Debug.Log("timer++");
             timer = timer + Time.deltaTime;
-            transform.position = Vector2.MoveTowards(transform.position, target.transform.position, projSpeed * Time.deltaTime);
+            //transform.position = Vector2.MoveTowards(transform.position, target.transform.position, projSpeed * Time.deltaTime);
 
         }
         else
