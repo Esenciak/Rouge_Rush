@@ -13,9 +13,6 @@ public class EnemyMovement : MonoBehaviour
     private float timer = 0;
     private float timerReset = 2f;
 
-    private float deadZone = 3;
-    
-
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +30,8 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            difMovement();
+            //Destroy(gameObject);
         }
         
     }
@@ -42,6 +40,12 @@ public class EnemyMovement : MonoBehaviour
     void Movement()
     {
         transform.position = Vector2.MoveTowards(transform.position, target.transform.position, moveSpeed * Time.deltaTime);
+    }
+
+    void difMovement()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, (moveSpeed * -1) * Time.deltaTime);
+
     }
 }
 
