@@ -35,6 +35,7 @@ public class ProjectalScript : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            Destroy(rigBody);
         }
     }
 
