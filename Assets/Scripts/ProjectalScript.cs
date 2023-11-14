@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ProjectalScript : MonoBehaviour
 {
-    public float projSpeed;
+    public float projSpeed = 2f;
 
-    private Rigidbody2D rigBody;
+    public Rigidbody2D rigBody;
 
     // Start is called before the first frame update
     void Start()
