@@ -30,8 +30,8 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            difMovement();
-            //Destroy(gameObject);
+            //difMovement();
+            Destroy(gameObject);
         }
         
     }
