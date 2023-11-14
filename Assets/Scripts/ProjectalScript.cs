@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class ProjectalScript : MonoBehaviour
 {
     public float projSpeed = 2f;
     private float timer = 0f;
-    private float timeReset = 2f;
+    private float timeReset = 1f;
     public GameObject target;
     public Rigidbody2D rigBody;
 
@@ -25,15 +26,18 @@ public class ProjectalScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, projSpeed * Time.deltaTime);
+        
         if (timer < timeReset)
         {
+            //Debug.Log("timer++");
             timer = timer + Time.deltaTime;
-            
+            transform.position = Vector2.MoveTowards(transform.position, target.transform.position, projSpeed * Time.deltaTime);
 
         }
         else
         {
+            Debug.Log("time is up, fireball was destroyed!!");
+            timeReset = 0;
             Destroy(gameObject);
             Destroy(rigBody);
         }
