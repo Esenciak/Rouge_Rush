@@ -9,7 +9,8 @@ public class PlayerAttackScript : MonoBehaviour
     public Transform projPos;
     public GameObject projectile;
     public float speed = 2f;
-
+    private float timer = 0;
+    public float attackRate = 3;
     void Start()
     {
         
@@ -21,9 +22,8 @@ public class PlayerAttackScript : MonoBehaviour
         //player input to attack
         if(Input.GetMouseButton(0)) 
         {
-            shoot();
-
-
+         
+         shoot();
         }
        
 
