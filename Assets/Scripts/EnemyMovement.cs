@@ -11,7 +11,7 @@ public class EnemyMovement : MonoBehaviour
     public GameObject target;
 
     private float timer = 0;
-    private float timerReset = 2f;
+    public float timerReset = 2f;
 
     // Start is called before the first frame update
     void Start()

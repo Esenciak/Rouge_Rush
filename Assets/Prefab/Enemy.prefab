@@ -195,3 +195,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1.2
   target: {fileID: 0}
+  timerReset: 4
