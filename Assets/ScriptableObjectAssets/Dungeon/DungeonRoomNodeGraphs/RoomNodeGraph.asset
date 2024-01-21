@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60dba47f4d14ed046b952dd0f4445fed, type: 3}
+  m_Script: {fileID: 11500000, guid: 1fd193ca0c9070747b633840b9710fda, type: 3}
   m_Name: RoomNodeGraph
   m_EditorClassIdentifier: 
   roomNodeTypeList: {fileID: 0}
   roomNodeList: []
+  roomNodeToDrawLineFrom: {fileID: 0}
+  linePosition: {x: 0, y: 0}
