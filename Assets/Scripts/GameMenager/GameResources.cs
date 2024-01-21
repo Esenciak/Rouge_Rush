@@ -6,7 +6,7 @@ public class GameResources : MonoBehaviour
 {
     private static GameResources instance;
 
-    public static GameResources Istance
+    public static GameResources Instance
     {
         get
         {
@@ -24,8 +24,8 @@ public class GameResources : MonoBehaviour
     #endregion
     #region Tooltip
     [Tooltip("Zape³nionn z dungeon RoomNodeTypeListSO")]
-	#endregion
+    #endregion
 
-	public RoomNodeTypeListSO roomNodeTypeList;
+    public RoomNodeTypeListSO roomNodeTypeList;
 
 }
