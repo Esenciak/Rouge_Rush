@@ -13,7 +13,7 @@ public class RoomNodeTypeListSO : ScriptableObject
 	#region Tooltip
 	[Tooltip("Tu powinny siê zgraæ RoomNodeTypeListSO, uzywane zamiast enum")]
 	#endregion
-	public List<RoomNodeTypeListSO> list;
+	public List<RoomNodeTypeSO> list;
 
 
 
