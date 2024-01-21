@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 //tworzy w assets mozliwoœæ tworzenia Room Node Graph
-[CreateAssetMenu(fileName = "RoomNodeGraph", menuName = "Skriptable Object/Dungeon/Room Node Graph")]
+[CreateAssetMenu(fileName = "RoomNodeGraph", menuName = "Scriptable Object/Dungeon/Room Node Graph")]
 
 public class NewBehaviourScript : ScriptableObject
 {
