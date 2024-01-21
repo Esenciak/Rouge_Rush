@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor.Callbacks;
 using UnityEditor;
+using UnityEditor.Callbacks;
+using UnityEngine;
 
 public class RoomNodeGraphEditor : EditorWindow
 {
@@ -63,7 +61,7 @@ public class RoomNodeGraphEditor : EditorWindow
 
     private void ProcessEvents(Event currentEvent)
     {
-       // currentRoomNode = IsMouseOverRoomNode(currentEvent);
+        // currentRoomNode = IsMouseOverRoomNode(currentEvent);
 
         ProcessRoomNodeGraphEvents(currentEvent);
     }
@@ -108,7 +106,7 @@ public class RoomNodeGraphEditor : EditorWindow
         menu.ShowAsContext();
     }
 
-    
+
 
     private void CreateRoomNode(object mousePositionObject)
     {
