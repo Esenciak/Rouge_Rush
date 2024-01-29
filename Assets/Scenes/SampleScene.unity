@@ -388,9 +388,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02a946f5636af1c44b1a286fe01d7098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRididbody: {fileID: 569362823}
-  movementSpeed: 1.5
-  movementDirection: {x: 0, y: 0}
 --- !u!114 &569362825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,11 +400,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55cad3a42dee00648b8294477c8e2321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projPos: {fileID: 697825433}
-  projectile: {fileID: 5083560514498880565, guid: fc38744f25239154ea254fa9445f170f, type: 3}
-  speed: 2
-  timer: 0
-  attackRate: 3
 --- !u!1 &697825432
 GameObject:
   m_ObjectHideFlags: 0
