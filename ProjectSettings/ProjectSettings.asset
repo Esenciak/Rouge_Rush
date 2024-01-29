@@ -627,8 +627,8 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Rouge_Rush_Game
-  metroPackageVersion: 
+  metroPackageName: RougeRushGame
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -636,7 +636,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: Rouge_Rush_Game
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: Rouge_Rush_Game
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
