@@ -1,4 +1,4 @@
-public enum Orientation
+﻿public enum Orientation
 {
 	north,
 	east,
@@ -6,7 +6,6 @@ public enum Orientation
 	west,
 	none
 }
-
 public enum AimDirection
 {
 	Up,
@@ -52,3 +51,4 @@ public enum GameState
 	dungeonOverviewMap,
 	restartGame
 }
+
