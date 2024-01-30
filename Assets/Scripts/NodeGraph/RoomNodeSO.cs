@@ -13,12 +13,12 @@ public class RoomNodeSO : ScriptableObject
     public RoomNodeTypeSO roomNodeType;
     [HideInInspector] public RoomNodeTypeListSO roomNodeTypeList;
 
-    #region Editor Code
+	#region Editor Code
 
-    // the following code should only be run in the Unity Editor
+	// ten kod powinien byæ uruchamiany tylko w Unity Editorze
 #if UNITY_EDITOR
 
-    [HideInInspector] public Rect rect;
+	[HideInInspector] public Rect rect;
 	[HideInInspector] public bool isLeftClickDragging = false;
 	[HideInInspector] public bool isSelected = false;
 	public void Initialise(Rect rect, RoomNodeGraphSO nodeGraph, RoomNodeTypeSO roomNodeType)
@@ -29,27 +29,27 @@ public class RoomNodeSO : ScriptableObject
         this.roomNodeGraph = nodeGraph;
         this.roomNodeType = roomNodeType;
 
-        // Load room node type list
+        // ³¹duje typy pokoi
         roomNodeTypeList = GameResources.Instance.roomNodeTypeList;
     }
 
     public void Draw(GUIStyle nodeStyle)
 	{
-		//  Draw Node Box Using Begin Area
+		//  Rysuje kwadrat tego noda
 		GUILayout.BeginArea(rect, nodeStyle);
 
-		// Start Region To Detect Popup Selection Changes
+		// Sprawwdza czy s¹ zmiany
 		EditorGUI.BeginChangeCheck();
 
-		// if the room node has a parent or is of type entrance then display a label else display a popup
+		// je¿eli jest po³¹czona z rodzicem (starszym pokojem tzn po³¹czonym pierwszym) albo jest wejœciem to ma siê pokazaæ miejsce na wybór 
 		if (parentRoomNodeIDList.Count > 0 || roomNodeType.isEntrance)
 		{
-			// Display a label that can't be changed
+			// nazwa której nie mo¿na zmieniæ
 			EditorGUILayout.LabelField(roomNodeType.roomNodeTypeName);
 		}
 		else
 		{
-			// Display a popup using the RoomNodeType name values that can be selected from (default to the currently set roomNodeType)
+			// Wyœwietl okno wyskakuj¹ce z nazw¹ wartoœci RoomNodeType które mo¿na wybieraæ domyœlnie jest none
 			int selected = roomNodeTypeList.list.FindIndex(x => x == roomNodeType);
 
 			int selection = EditorGUILayout.Popup("", selected, GetRoomNodeTypesToDisplay());
@@ -106,17 +106,17 @@ public class RoomNodeSO : ScriptableObject
 	{
 		switch (currentEvent.type)
 		{
-			// Process Mouse Down Events
+			
 			case EventType.MouseDown:
 				ProcessMouseDownEvent(currentEvent);
 				break;
 
-			// Process Mouse Up Events
+			
 			case EventType.MouseUp:
 				ProcessMouseUpEvent(currentEvent);
 				break;
 
-			// Process Mouse Drag Events
+			
 			case EventType.MouseDrag:
 				ProcessMouseDragEvent(currentEvent);
 				break;
@@ -146,7 +146,7 @@ public class RoomNodeSO : ScriptableObject
 		Selection.activeObject = this;
 
 		
-		// Toggle node selection
+		// Zmienia po klikniêciu
 		if (isSelected == true)
 		{
 			isSelected = false;
@@ -157,14 +157,14 @@ public class RoomNodeSO : ScriptableObject
 		}
 	}
 
-	private void ProcessRightClickDownEvent(Event currentEvent)
+	private void ProcessRightClickDownEvent(Event currentEvent)	// zaczyna rysowaæ
 	{
 		roomNodeGraph.SetNodeToDrawConnectionLineFrom(this, currentEvent.mousePosition);
 	}
 
 	private void ProcessMouseUpEvent(Event currentEvent)
 	{
-		// If left click up
+		// je¿eli lewy przycisk
 		if (currentEvent.button == 0)
 		{
 			ProcessLeftClickUpEvent();
@@ -204,7 +204,7 @@ public class RoomNodeSO : ScriptableObject
 
 	public bool AddChildRoomNodeIDToRoomNode(string childID)
 	{
-		// Check child node can be added validly to parent
+		// sprawdza walidacjê czy da siê dodaæ
 		if (IsChildRoomValid(childID))
 		{
 			childRoomNodeIDList.Add(childID);
@@ -217,54 +217,54 @@ public class RoomNodeSO : ScriptableObject
 	public bool IsChildRoomValid(string childID)
 	{
 		bool isConnectedBossNodeAlready = false;
-		// Check if there is there already a connected boss room in the node graph
+		// czy istnieje ju¿ po³¹czony pokój typu boss w grafie
 		foreach (RoomNodeSO roomNode in roomNodeGraph.roomNodeList)
 		{
 			if (roomNode.roomNodeType.isBossRoom && roomNode.parentRoomNodeIDList.Count > 0)
 				isConnectedBossNodeAlready = true;
 		}
 
-		// if the child node has a type of boss room and there is already a connected boss room node then return false
+		// jak dziecko jest bossem i jest po³¹czone to false czyli sie nie da po³¹czyæ
 		if (roomNodeGraph.GetRoomNode(childID).roomNodeType.isBossRoom && isConnectedBossNodeAlready)
 			return false;
 
-		// If the child node has a type of none then return false
+		// jak ma none to nie mo¿na ³¹czyæ
 		if (roomNodeGraph.GetRoomNode(childID).roomNodeType.isNone)
 			return false;
 
-		// If the node already has a child with this child ID return false
+		// ¿eby nie mo¿na by³o 2 razy po³¹czyæ tego samego
 		if (childRoomNodeIDList.Contains(childID))
 			return false;
 
-		// If this node ID and the child ID are the same return false
+		// ¿eby nie mo¿na by³o stworzyæ z tego samego co siê zaczyna
 		if (id == childID)
 			return false;
 
-		// If this childID is already in the parentID list return false
+		// jak jest ju¿ po³¹czone (jest rodzicem) to ¿eby nie da³o siê wróciæ innym wejœciem do pokoju
 		if (parentRoomNodeIDList.Contains(childID))
 			return false;
 
-		// If the child node already has a parent return false
+		// ¿eby nie da³o siê wejœæ tzn ma rodzica
 		if (roomNodeGraph.GetRoomNode(childID).parentRoomNodeIDList.Count > 0)
 			return false;
 
-		// If child is a corridor and this node is a corridor return false
+		// 2 korytarze nie mog¹ siê po³¹czyæ
 		if (roomNodeGraph.GetRoomNode(childID).roomNodeType.isCorridor && roomNodeType.isCorridor)
 			return false;
 
-		// If child is not a corridor and this node is not a corridor return false
+		// 2 pokoje bez korytarza nie mog¹ siê po³¹czyæ
 		if (!roomNodeGraph.GetRoomNode(childID).roomNodeType.isCorridor && !roomNodeType.isCorridor)
 			return false;
 
-		// If adding a corridor check that this node has < the maximum permitted child corridors
+		// Jeœli dodawany jest korytarz sprawdz w opcjach ile maksymalnie mo¿e mieæ odnóg (3)
 		if (roomNodeGraph.GetRoomNode(childID).roomNodeType.isCorridor && childRoomNodeIDList.Count >= Settings.maxChildCorridors)
 			return false;
 
-		// if the child room is an entrance return false - the entrance must always be the top level parent node
+		// nie mo¿na wejœæ do wejœcia, z wejœcia mo¿na tylko wyjœæ (¿e pokój 1 pokój)
 		if (roomNodeGraph.GetRoomNode(childID).roomNodeType.isEntrance)
 			return false;
 
-		// If adding a room to a corridor check that this corridor node doesn't already have a room added
+		// 1 pokój wejœciowy i 1 wyjœciowy dla korytarza
 		if (!roomNodeGraph.GetRoomNode(childID).roomNodeType.isCorridor && childRoomNodeIDList.Count > 0)
 			return false;
 
@@ -279,7 +279,7 @@ public class RoomNodeSO : ScriptableObject
 
 	public bool RemoveChildRoomNodeIDFromRoomNode(string childID)
 	{
-		// if the node contains the child ID then remove it
+		// jezeli ma przypisane childId to usuñ
 		if (childRoomNodeIDList.Contains(childID))
 		{
 			childRoomNodeIDList.Remove(childID);
@@ -290,7 +290,7 @@ public class RoomNodeSO : ScriptableObject
 
 	public bool RemoveParentRoomNodeIDFromRoomNode(string parentID)
 	{
-		// if the node contains the parent ID then remove it
+		// jezeli ma przypisane parentId to usuñ
 		if (parentRoomNodeIDList.Contains(parentID))
 		{
 			parentRoomNodeIDList.Remove(parentID);

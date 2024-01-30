@@ -14,13 +14,13 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
 	private void OnEnable()
 	{
-		// Set dimmed material to off
+		// ustawia (dimmed material)
 		GameResources.Instance.dimmedMaterial.SetFloat("Alpha_Slider", 0f);
 	}
 
 	private void OnDisable()
 	{
-		// Set dimmed material to fully visible
+		// ustawia dimmed material 
 		GameResources.Instance.dimmedMaterial.SetFloat("Alpha_Slider", 1f);
 	}
 
@@ -28,7 +28,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 	{
 		base.Awake();
 
-		// Load the room node type list
+		// ³¹duje room node type list
 		LoadRoomNodeTypeList();
 
 	}
@@ -42,38 +42,38 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 	{
 		roomTemplateList = currentDungeonLevel.roomTemplateList;
 
-		// Load the scriptable object room templates into the dictionary
+		// ³aduje SO room template
 		LoadRoomTemplatesIntoDictionary();
 
 		dungeonBuildSuccessful = false;
 		int dungeonBuildAttempts = 0;
 
-		while (!dungeonBuildSuccessful && dungeonBuildAttempts < Settings.maxDungeonBuildAttempts)
+		while (!dungeonBuildSuccessful && dungeonBuildAttempts < Settings.maxDungeonBuildAttempts)	//(1000 prób)
 		{
 			dungeonBuildAttempts++;
 
-			// Select a random room node graph from the list
+			// Wybiera losowe rozmieszczenie grafów wczeœniej przygotowane
 			RoomNodeGraphSO roomNodeGraph = SelectRandomRoomNodeGraph(currentDungeonLevel.roomNodeGraphList);
 
-			int dungeonRebuildAttemptsForNodeGraph = 0;
+			int dungeonRebuildAttemptsForNodeGraph = 0;	//proby budowy dungeona z grafu (max 10)
 			dungeonBuildSuccessful = false;
 
-			// Loop until dungeon successfully built or more than max attempts for node graph
+			// Pêtla prób budowy dungeonu dla danego grafu (mo¿e próbowaæ kilka razy az do maxa)
 			while (!dungeonBuildSuccessful && dungeonRebuildAttemptsForNodeGraph <= Settings.maxDungeonRebuildAttemptsForRoomGraph)
 			{
-				// Clear dungeon room gameobjects and dungeon room dictionary
+				// czyœci i dodaje ¿e by³a próba
 				ClearDungeon();
 
 				dungeonRebuildAttemptsForNodeGraph++;
 
-				// Attempt To Build A Random Dungeon For The Selected room node graph
+				// kolejna próba
 				dungeonBuildSuccessful = AttemptToBuildRandomDungeon(roomNodeGraph);
 			}
 
 
 			if (dungeonBuildSuccessful)
 			{
-				// Instantiate Room Gameobjects
+				// inicjuje pokoje
 				InstantiateRoomGameobjects();
 			}
 		}
@@ -84,10 +84,10 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
 	private void LoadRoomTemplatesIntoDictionary()
 	{
-		// Clear room template dictionary
+		
 		roomTemplateDictionary.Clear();
 
-		// Load room template list into dictionary
+		// ³¹duje room template list
 		foreach (RoomTemplateSO roomTemplate in roomTemplateList)
 		{
 			if (!roomTemplateDictionary.ContainsKey(roomTemplate.guid))
@@ -104,10 +104,10 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 	private bool AttemptToBuildRandomDungeon(RoomNodeGraphSO roomNodeGraph)
 	{
 
-		// Create Open Room Node Queue
+		
 		Queue<RoomNodeSO> openRoomNodeQueue = new Queue<RoomNodeSO>();
 
-		// Add Entrance Node To Room Node Queue From Room Node Graph
+		// doadje wejœcie (node) do roomnodequeue z roomnode graphu
 		RoomNodeSO entranceNode = roomNodeGraph.GetRoomNode(roomNodeTypeList.list.Find(x => x.isEntrance));
 
 		if (entranceNode != null)
@@ -117,17 +117,15 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 		else
 		{
 			Debug.Log("No Entrance Node");
-			return false;  // Dungeon Not Built
+			return false;  // nie uda³o siê zbudowaæ
 		}
 
-		// Start with no room overlaps
 		bool noRoomOverlaps = true;
 
 
-		// Process open room nodes queue
 		noRoomOverlaps = ProcessRoomsInOpenRoomNodeQueue(roomNodeGraph, openRoomNodeQueue, noRoomOverlaps);
 
-		// If all the room nodes have been processed and there hasn't been a room overlap then return true
+		// je¿eli wsyzstko siê przeprocesuje i zaden z pokoi na siebie nie nachodzi to jest true
 		if (openRoomNodeQueue.Count == 0 && noRoomOverlaps)
 		{
 			return true;

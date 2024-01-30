@@ -26,7 +26,7 @@ public class GameResources : MonoBehaviour
     [Tooltip("Populate with the dungeon RoomNodeTypeListSO")]
     #endregion
 
-    public RoomNodeTypeListSO roomNodeTypeList;
+    public RoomNodeTypeListSO roomNodeTypeList; // lista pokoi
 
 	#region Header PLAYER
 	[Space(10)]
@@ -35,7 +35,7 @@ public class GameResources : MonoBehaviour
 	#region Tooltip
 	[Tooltip("The current player scriptable object - this is used to reference the current player between scenes")]
 	#endregion Tooltip
-	public CurrentPlayerSO currentPlayer;
+	public CurrentPlayerSO currentPlayer;   // to zachwouje statystyki gracza ¿eby go przenieœæ na 2 poziom 
 
 	#region Header MATERIALS
 	[Space(10)]
@@ -44,7 +44,7 @@ public class GameResources : MonoBehaviour
 	#region Tooltip
 	[Tooltip("Dimmed Material")]
 	#endregion
-	public Material dimmedMaterial;
+	public Material dimmedMaterial; // materia³ ,,œwiat³a,,
 
 
 }
