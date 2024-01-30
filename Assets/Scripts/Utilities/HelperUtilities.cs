@@ -22,7 +22,13 @@ public static class HelperUtilities
         foreach (var item in enumerableObjectToCheck)
         {
 
-            if (item == null)
+			if (enumerableObjectToCheck == null)
+			{
+				Debug.Log(fieldName + " is null in object " + thisObject.name.ToString());
+				return true;
+			}
+
+			if (item == null)
             {
                 Debug.Log(fieldName + " has null values in object " + thisObject.name.ToString());
                 error = true;

@@ -459,9 +459,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.13800424
-    width: 1
-    height: 0.7235271
+    y: 0.16100495
+    width: 0.99941295
+    height: 0.67774683
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -521,6 +521,63 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!1 &1090366233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1090366235}
+  - component: {fileID: 1090366236}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1090366235
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090366233}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.012725, y: 6.9262047, z: 0.32682464}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1090366236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090366233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e8335723095df4eba5fff4b9113aaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseMenu: {fileID: 0}
+  messageTextTMP: {fileID: 0}
+  canvasGroup: {fileID: 0}
+  dungeonLevelList:
+  - {fileID: 11400000, guid: 3258e4616e32ef34c8bed2c3573a0bd4, type: 2}
+  - {fileID: 11400000, guid: 32dd9e2f45f0fed48a81ec6a9a54cd94, type: 2}
+  - {fileID: 11400000, guid: 7e8019504c14c1b4993401983d328927, type: 2}
+  - {fileID: 11400000, guid: dea1fd74c3b8e3049aa3fde24f496a0a, type: 2}
+  - {fileID: 11400000, guid: 15e6809cc956b1640992ce08b7ccafe5, type: 2}
+  - {fileID: 11400000, guid: a133f2eb8fb7a324da99f0a0240a0f3e, type: 2}
+  - {fileID: 11400000, guid: 3258e4616e32ef34c8bed2c3573a0bd4, type: 2}
+  currentDungeonLevelListIndex: 0
+  gameState: 0
 --- !u!1 &1638190838
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,6 +709,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1695799342
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1695799344}
+  - component: {fileID: 1695799343}
+  m_Layer: 0
+  m_Name: DungeonBuilder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1695799343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695799342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30e63fc761569044184cd6919480aece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1695799344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695799342}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.012725, y: 6.9262047, z: 0.32682464}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2097106607
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,3 +810,5 @@ SceneRoots:
   - {fileID: 2097106609}
   - {fileID: 1667683100}
   - {fileID: 1638190840}
+  - {fileID: 1090366235}
+  - {fileID: 1695799344}
