@@ -140,19 +140,18 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 	private bool ProcessRoomsInOpenRoomNodeQueue(RoomNodeGraphSO roomNodeGraph, Queue<RoomNodeSO> openRoomNodeQueue, bool noRoomOverlaps)
 	{
 
-		// While room nodes in open room node queue & no room overlaps detected.
 		while (openRoomNodeQueue.Count > 0 && noRoomOverlaps == true)
 		{
-			// Get next room node from open room node queue.
+			// bierze kolejny pokój z kolejki
 			RoomNodeSO roomNode = openRoomNodeQueue.Dequeue();
 
-			// Add child Nodes to queue from room node graph (with links to this parent Room)
+			// dodaje child node do koleiki 
 			foreach (RoomNodeSO childRoomNode in roomNodeGraph.GetChildRoomNodes(roomNode))
 			{
-				openRoomNodeQueue.Enqueue(childRoomNode);
+				openRoomNodeQueue.Enqueue(childRoomNode);	// enqueue dodaje na koniec listy
 			}
 
-			// if the room is the entrance mark as positioned and add to room dictionary
+			// je¿eli pokój jest wejœciem to dajemy ¿e jest udsawtione i do dictionary
 			if (roomNode.roomNodeType.isEntrance)
 			{
 				RoomTemplateSO roomTemplate = GetRandomRoomTemplate(roomNode.roomNodeType);
@@ -161,17 +160,17 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
 				room.isPositioned = true;
 
-				// Add room to room dictionary
+				// dodaje room do dictionary
 				dungeonBuilderRoomDictionary.Add(room.id, room);
 			}
 
-			// else if the room type isn't an entrance
+			// else jak nie jest wejœciem
 			else
 			{
-				// Else get parent room for node
+				// to bierze parent room
 				Room parentRoom = dungeonBuilderRoomDictionary[roomNode.parentRoomNodeIDList[0]];
 
-				// See if room can be placed without overlaps
+				// i sprawdza czy da siê postawiæ bez nak³adania siê pokoi
 				noRoomOverlaps = CanPlaceRoomWithNoOverlaps(roomNode, parentRoom);
 			}
 
@@ -184,40 +183,39 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 	private bool CanPlaceRoomWithNoOverlaps(RoomNodeSO roomNode, Room parentRoom)
 	{
 
-		// initialise and assume overlap until proven otherwise.
+		// zaczynamy od za³o¿enia ¿e siê na³o¿y pokój
 		bool roomOverlaps = true;
 
-		// Do While Room Overlaps - try to place against all available doorways of the parent until
-		// the room is successfully placed without overlap.
+		//wykonaj gdy nak³adaj¹ siê
 		while (roomOverlaps)
 		{
-			// Select random unconnected available doorway for Parent
+			// wybiera losowo niepo³¹czone drzwi dostêpne od rodzica
 			List<Doorway> unconnectedAvailableParentDoorways = GetUnconnectedAvailableDoorways(parentRoom.doorWayList).ToList();
 
 			if (unconnectedAvailableParentDoorways.Count == 0)
 			{
-				// If no more doorways to try then overlap failure.
-				return false; // room overlaps
+				// je¿eli nie ma ¿adnych drzwi dostêpnych to siê nak³adaj¹
+				return false; // pokoje siê nak³adaj¹ 
 			}
 
 			Doorway doorwayParent = unconnectedAvailableParentDoorways[UnityEngine.Random.Range(0, unconnectedAvailableParentDoorways.Count)];
 
-			// Get a random room template for room node that is consistent with the parent door orientation
+			// bierze losowo toom template z room nooda (np du¿y pokój to bierze large room)
 			RoomTemplateSO roomtemplate = GetRandomTemplateForRoomConsistentWithParent(roomNode, doorwayParent);
 
-			// Create a room
+			// tworzy pokój
 			Room room = CreateRoomFromRoomTemplate(roomtemplate, roomNode);
 
-			// Place the room - returns true if the room doesn't overlap
+			// i go k³adzie, 
 			if (PlaceTheRoom(parentRoom, doorwayParent, room))
 			{
-				// If room doesn't overlap then set to false to exit while loop
+				// jak siê nie nak³adaj¹to false konczy pêtle
 				roomOverlaps = false;
 
-				// Mark room as positioned
+				// pokój jako postawiony
 				room.isPositioned = true;
 
-				// Add room to dictionary
+				// dodaje id i nazwê pokoju do dictionary
 				dungeonBuilderRoomDictionary.Add(room.id, room);
 
 			}
@@ -228,7 +226,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
 		}
 
-		return true;  // no room overlaps
+		return true;  // ¿aden siê nie nak³ada
 
 	}
 
@@ -236,8 +234,6 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 	{
 		RoomTemplateSO roomtemplate = null;
 
-		// If room node is a corridor then select random correct Corridor room template based on
-		// parent doorway orientation
 		if (roomNode.roomNodeType.isCorridor)
 		{
 			switch (doorwayParent.orientation)
@@ -261,7 +257,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 					break;
 			}
 		}
-		// Else select random room template
+		
 		else
 		{
 			roomtemplate = GetRandomRoomTemplate(roomNode.roomNodeType);
@@ -274,25 +270,23 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 	private bool PlaceTheRoom(Room parentRoom, Doorway doorwayParent, Room room)
 	{
 
-		// Get current room doorway position
 		Doorway doorway = GetOppositeDoorway(doorwayParent, room.doorWayList);
 
-		// Return if no doorway in room opposite to parent doorway
+		
 		if (doorway == null)
 		{
-			// Just mark the parent doorway as unavailable so we don't try and connect it again
+			
 			doorwayParent.isUnavailable = true;
 
 			return false;
 		}
 
-		// Calculate 'world' grid parent doorway position
+		// Oblicza pozycjê wejœcia na mapie gry
 		Vector2Int parentDoorwayPosition = parentRoom.lowerBounds + doorwayParent.position - parentRoom.templateLowerBounds;
 
 		Vector2Int adjustment = Vector2Int.zero;
 
-		// Calculate adjustment position offset based on room doorway position that we are trying to connect (e.g. if this doorway is west then we need to add (1,0) to the east parent doorway)
-
+		
 		switch (doorway.orientation)
 		{
 			case Orientation.north:
@@ -318,7 +312,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 				break;
 		}
 
-		// Calculate room lower bounds and upper bounds based on positioning to align with parent doorway
+		//Oblicz doln¹ i górn¹ granicê pomieszczenia w oparciu o po³o¿enie dopasowane do drzwi nadrzêdnych
 		room.lowerBounds = parentDoorwayPosition + adjustment + room.templateLowerBounds - doorway.position;
 		room.upperBounds = room.lowerBounds + room.templateUpperBounds - room.templateLowerBounds;
 
@@ -326,19 +320,19 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
 		if (overlappingRoom == null)
 		{
-			// mark doorways as connected & unavailable
+			// oznacza wejœcia jako po³¹czone i nie dostêpne
 			doorwayParent.isConnected = true;
 			doorwayParent.isUnavailable = true;
 
 			doorway.isConnected = true;
 			doorway.isUnavailable = true;
 
-			// return true to show rooms have been connected with no overlap
+			// zwraca true zeby pokazaæ ¿e s¹ po³¹czone bez nak³adania siê
 			return true;
 		}
 		else
 		{
-			// Just mark the parent doorway as unavailable so we don't try and connect it again
+			// po³¹czone Parent drzwi oznacza jako nie dostepnê ¿eby nei próbowaæ wiêcej
 			doorwayParent.isUnavailable = true;
 
 			return false;
@@ -375,16 +369,16 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
 	private Room CheckForRoomOverlap(Room roomToTest)
 	{
-		// Iterate through all rooms
+		// iteracja przez wszyskie pokoje
 		foreach (KeyValuePair<string, Room> keyvaluepair in dungeonBuilderRoomDictionary)
 		{
 			Room room = keyvaluepair.Value;
 
-			// skip if same room as room to test or room hasn't been positioned
+			// pomiñ jak ten sam pokój co pokój do testowania lub pokój nie zosta³ ustawiony 
 			if (room.id == roomToTest.id || !room.isPositioned)
 				continue;
 
-			// If room overlaps
+			// jak siê nak³adaj¹
 			if (IsOverLappingRoom(roomToTest, room))
 			{
 				return room;
@@ -392,7 +386,6 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 		}
 
 
-		// Return
 		return null;
 
 	}
@@ -431,38 +424,35 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 	{
 		List<RoomTemplateSO> matchingRoomTemplateList = new List<RoomTemplateSO>();
 
-		// Loop through room template list
 		foreach (RoomTemplateSO roomTemplate in roomTemplateList)
 		{
-			// Add matching room templates
 			if (roomTemplate.roomNodeType == roomNodeType)
 			{
 				matchingRoomTemplateList.Add(roomTemplate);
 			}
 		}
 
-		// Return null if list is zero
+		// walidacja zwraca null jak nie ma
 		if (matchingRoomTemplateList.Count == 0)
 			return null;
 
-		// Select random room template from list and return
+		//  wybiera losowo templatke i j¹ zwraca
 		return matchingRoomTemplateList[UnityEngine.Random.Range(0, matchingRoomTemplateList.Count)];
 
 	}
 
 	private IEnumerable<Doorway> GetUnconnectedAvailableDoorways(List<Doorway> roomDoorwayList)
 	{
-		// Loop through doorway list
+		// Loop przez listê drzwi
 		foreach (Doorway doorway in roomDoorwayList)
 		{
 			if (!doorway.isConnected && !doorway.isUnavailable)
-				yield return doorway;
+				yield return doorway; // IENumerable to iterator a yield podaje nastêpn¹ wartoœæ w iteracji
 		}
 	}
 
 	private Room CreateRoomFromRoomTemplate(RoomTemplateSO roomTemplate, RoomNodeSO roomNode)
 	{
-		// Initialise room from template
 		Room room = new Room();
 
 		room.templateID = roomTemplate.guid;
@@ -481,14 +471,13 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 		room.childRoomIDList = CopyStringList(roomNode.childRoomNodeIDList);
 		room.doorWayList = CopyDoorwayList(roomTemplate.doorwayList);
 
-		// Set parent ID for room
-		if (roomNode.parentRoomNodeIDList.Count == 0) // Entrance
+		// ustawia parent id
+		if (roomNode.parentRoomNodeIDList.Count == 0) // wejscie
 		{
 			room.parentRoomID = "";
 			room.isPreviouslyVisited = true;
 
-			// Set entrance in game manager
-		//	GameManager.Instance.SetCurrentRoom(room);
+			GameManager.Instance.SetCurrentRoom(room);
 
 		}
 		else
@@ -556,35 +545,24 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
 		return newStringList;
 	}
-
-	/// <summary>
-	/// Instantiate the dungeon room gameobjects from the prefabs
-	/// </summary>
 	private void InstantiateRoomGameobjects()
 	{
-		// Iterate through all dungeon rooms.
 		foreach (KeyValuePair<string, Room> keyvaluepair in dungeonBuilderRoomDictionary)
 		{
 			Room room = keyvaluepair.Value;
 
-			// Calculate room position (remember the room instantiatation position needs to be adjusted by the room template lower bounds)
 			Vector3 roomPosition = new Vector3(room.lowerBounds.x - room.templateLowerBounds.x, room.lowerBounds.y - room.templateLowerBounds.y, 0f);
 
-			// Instantiate room
 			GameObject roomGameobject = Instantiate(room.prefab, roomPosition, Quaternion.identity, transform);
 
-			// Get instantiated room component from instantiated prefab.
+			//inicjalizacja pokoju 
 			InstantiatedRoom instantiatedRoom = roomGameobject.GetComponentInChildren<InstantiatedRoom>();
 
 			instantiatedRoom.room = room;
-
-			// Initialise The Instantiated Room
 			instantiatedRoom.Initialise(roomGameobject);
+			room.instantiatedRoom = instantiatedRoom;	// zapis referencji
 
-			// Save gameobject reference.
-			room.instantiatedRoom = instantiatedRoom;
-
-			//// test code to set rooms as cleared - except for boss
+			//// test code do clearowania pokoi- poza bossem
 			//if (!room.roomNodeType.isBossRoom)
 			//{
 			//    room.isClearedOfEnemies = true;
@@ -592,11 +570,6 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 		}
 
 	}
-
-
-	/// <summary>
-	/// Get a room template by room template ID, returns null if ID doesn't exist
-	/// </summary>
 	public RoomTemplateSO GetRoomTemplate(string roomTemplateID)
 	{
 		if (roomTemplateDictionary.TryGetValue(roomTemplateID, out RoomTemplateSO roomTemplate))
@@ -609,9 +582,6 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 		}
 	}
 
-	/// <summary>
-	/// Get room by roomID, if no room exists with that ID return null
-	/// </summary>
 	public Room GetRoomByRoomID(string roomID)
 	{
 		if (dungeonBuilderRoomDictionary.TryGetValue(roomID, out Room room))
@@ -623,14 +593,9 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 			return null;
 		}
 	}
-
-
-	
-	/// Clear dungeon room gameobjects and dungeon room dictionary
 	
 	private void ClearDungeon()
 	{
-		// Destroy instantiated dungeon gameobjects and clear dungeon manager room dictionary
 		if (dungeonBuilderRoomDictionary.Count > 0)
 		{
 			foreach (KeyValuePair<string, Room> keyvaluepair in dungeonBuilderRoomDictionary)
