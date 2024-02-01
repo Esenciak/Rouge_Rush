@@ -33,27 +33,48 @@ public static class HelperUtilities
 		return degrees;
 
 	}
+
+	public static Vector3 GetDirectionVectorFromAngle(float angle)
+	{
+		Vector3 directionVector = new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle), 0f);
+		return directionVector;
+	}
 	// ten k¹t zmieniam na to w któr¹ siê patrzy postaæ
 	public static AimDirection GetAimDirection(float angleDegrees)
 	{
 		AimDirection aimDirection;
 
+		// Set player direction
+		//Up Right
+		if (angleDegrees >= 22f && angleDegrees <= 67f)
+		{
+			aimDirection = AimDirection.UpRight;
+		}
 		// Up
-		if ((angleDegrees > 22f && angleDegrees <= 158f))
+		else if (angleDegrees > 67f && angleDegrees <= 112f)
 		{
 			aimDirection = AimDirection.Up;
 		}
+		// Up Left
+		else if (angleDegrees > 112f && angleDegrees <= 158f)
+		{
+			aimDirection = AimDirection.UpLeft;
+		}
 		// Left
-		else if (angleDegrees > 158f && angleDegrees <= -135f)
+		else if ((angleDegrees <= 180f && angleDegrees > 158f) || (angleDegrees > -180 && angleDegrees <= -135f))
 		{
 			aimDirection = AimDirection.Left;
 		}
 		// Down
-		else if (angleDegrees > -135f && angleDegrees <= -45f)
+		else if ((angleDegrees > -135f && angleDegrees <= -45f))
 		{
 			aimDirection = AimDirection.Down;
 		}
 		// Right
+		else if ((angleDegrees > -45f && angleDegrees <= 0f) || (angleDegrees > 0 && angleDegrees < 22f))
+		{
+			aimDirection = AimDirection.Right;
+		}
 		else
 		{
 			aimDirection = AimDirection.Right;
@@ -107,6 +128,45 @@ public static class HelperUtilities
 		return error;
 	}
 
+	public static bool ValidateCheckPositiveValue(Object thisObject, string fieldName, float valueToCheck, bool isZeroAllowed)
+	{
+		bool error = false;
+
+		if (isZeroAllowed)
+		{
+			if (valueToCheck < 0)
+			{
+				Debug.Log(fieldName + " must contain a positive value or zero in object " + thisObject.name.ToString());
+				error = true;
+			}
+		}
+		else
+		{
+			if (valueToCheck <= 0)
+			{
+				Debug.Log(fieldName + " must contain a positive value in object " + thisObject.name.ToString());
+				error = true;
+			}
+		}
+
+		return error;
+	}
+
+	public static bool ValidateCheckPositiveRange(Object thisObject, string fieldNameMinimum, float valueToCheckMinimum, string fieldNameMaximum, float valueToCheckMaximum, bool isZeroAllowed)
+	{
+		bool error = false;
+		if (valueToCheckMinimum > valueToCheckMaximum)
+		{
+			Debug.Log(fieldNameMinimum + " must be less than or equal to " + fieldNameMaximum + " in object " + thisObject.name.ToString());
+			error = true;
+		}
+
+		if (ValidateCheckPositiveValue(thisObject, fieldNameMinimum, valueToCheckMinimum, isZeroAllowed)) error = true;
+
+		if (ValidateCheckPositiveValue(thisObject, fieldNameMaximum, valueToCheckMaximum, isZeroAllowed)) error = true;
+
+		return error;
+	}
 
 
 	public static bool ValidateCheckEnumerableValues(Object thisObject, string fieldName, IEnumerable enumerableObjectToCheck)

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b1e6c2e7dde22241a45fc8544345c8f, type: 3}
+  m_Name: PlayerDetails_Officer
+  m_EditorClassIdentifier: 
+  playerCharacterName: officer
+  playerPrefab: {fileID: 7609126076417737191, guid: 3115774fa7451b149bf2911d1e567173, type: 3}
+  runtimeAnimatorController: {fileID: 9100000, guid: e87ce176a15556c459b355908992b930, type: 2}
+  playerHealthAmount: 100
+  isImmuneAfterHit: 0
+  hitImmunityTime: 0
+  playerMiniMapIcon: {fileID: 21300000, guid: 315b2925a8c3976498b2ddde24a0d5be, type: 3}
+  playerHandSprite: {fileID: 21300000, guid: d06a4c6675a50e0499105d5f4715b651, type: 3}

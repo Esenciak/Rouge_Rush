@@ -94,8 +94,26 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 		gameState = GameState.gameStarted;
 	}
 
-    // Update is called once per frame
-    private void Update()
+	private void OnEnable()
+	{
+		// room changed event.
+		StaticEventHandler.OnRoomChanged += StaticEventHandler_OnRoomChanged;
+	}
+
+	private void OnDisable()
+	{
+
+		StaticEventHandler.OnRoomChanged -= StaticEventHandler_OnRoomChanged;
+
+	}
+
+	private void StaticEventHandler_OnRoomChanged(RoomChangedEventArgs roomChangedEventArgs)
+	{
+		SetCurrentRoom(roomChangedEventArgs.room);
+	}
+
+	// Update is called once per frame
+	private void Update()
     {
 		HandleGameState();
 
@@ -121,6 +139,10 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 		}
 	}
 
+	public Sprite GetPlayerMiniMapIcon()
+	{
+		return playerDetails.playerMiniMapIcon;
+	}
 	public Room GetCurrentRoom()
 	{
 		return currentRoom;
@@ -141,6 +163,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 		{
 			Debug.LogError("Couldn't build dungeon from specified rooms and node graphs");
 		}
+		StaticEventHandler.CallRoomChangedEvent(currentRoom);
+
 		// ustawia gracza w pokoju
 		player.gameObject.transform.position = new Vector3((currentRoom.lowerBounds.x + currentRoom.upperBounds.x) / 2f, (currentRoom.lowerBounds.y + currentRoom.upperBounds.y) / 2f, 0f);
 

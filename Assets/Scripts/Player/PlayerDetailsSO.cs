@@ -40,6 +40,19 @@ public class PlayerDetailsSO : ScriptableObject
 	#endregion
 	public Sprite playerHandSprite;     // sprite rêki trzymania broni
 
+	#region Header WEAPON
+	[Space(10)]
+	[Header("WEAPON")]
+	#endregion
+	#region Tooltip
+	[Tooltip("Player  initial starting weapon")]
+	#endregion
+	public WeaponDetailsSO startingWeapon;
+	#region Tooltip
+	[Tooltip("Populate with the list of starting weapons")]
+	#endregion
+	public List<WeaponDetailsSO> startingWeaponList;
+
 
 	// walidacja czy nie s¹ puste
 	#region Validation
@@ -52,6 +65,8 @@ public class PlayerDetailsSO : ScriptableObject
 		HelperUtilities.ValidateCheckNullValue(this, nameof(playerMiniMapIcon), playerMiniMapIcon);
 		HelperUtilities.ValidateCheckNullValue(this, nameof(playerHandSprite), playerHandSprite);
 		HelperUtilities.ValidateCheckNullValue(this, nameof(runtimeAnimatorController), runtimeAnimatorController);
+		HelperUtilities.ValidateCheckNullValue(this, nameof(startingWeapon), startingWeapon);
+		HelperUtilities.ValidateCheckEnumerableValues(this, nameof(startingWeaponList), startingWeaponList);
 	}
 #endif
 	#endregion

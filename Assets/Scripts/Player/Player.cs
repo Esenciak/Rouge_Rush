@@ -20,6 +20,10 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(Idle))]
 [RequireComponent(typeof(AimWeaponEvent))]
 [RequireComponent(typeof(AimWeapon))]
+[RequireComponent(typeof(MovementByVelocityEvent))]
+[RequireComponent(typeof(MovementByVelocity))]
+[RequireComponent(typeof(SetActiveWeaponEvent))]
+[RequireComponent(typeof(ActiveWeapon))]
 
 #endregion WYMAGANE COMPONENTY
 
@@ -31,6 +35,13 @@ public class Player : MonoBehaviour
 	[HideInInspector] public Animator animator;
 	[HideInInspector] public IdleEvent idleEvent;
 	[HideInInspector] public AimWeaponEvent aimWeaponEvent;
+	[HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
+	[HideInInspector] public SetActiveWeaponEvent setActiveWeaponEvent;
+	[HideInInspector] public ActiveWeapon activeWeapon;
+
+	public List<Weapon> weaponList = new List<Weapon>();
+
+
 
 	private void Awake()
 	{
@@ -40,6 +51,9 @@ public class Player : MonoBehaviour
 		animator = GetComponent<Animator>();
 		idleEvent = GetComponent<IdleEvent>();
 		aimWeaponEvent = GetComponent<AimWeaponEvent>();
+		movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
+		setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
+		activeWeapon = GetComponent<ActiveWeapon>();
 	}
 
 	public void Initialize(PlayerDetailsSO playerDetails)
@@ -47,11 +61,37 @@ public class Player : MonoBehaviour
 		this.playerDetails = playerDetails;
 
 		SetPlayerHealth();
+		CreatePlayerStartingWeapons();
 	}
 
 	private void SetPlayerHealth()
 	{
 		health.SetStartingHealth(playerDetails.playerHealthAmount);
+	}
+
+	private void CreatePlayerStartingWeapons()
+	{
+		
+		weaponList.Clear();
+
+		
+		foreach (WeaponDetailsSO weaponDetails in playerDetails.startingWeaponList)
+		{
+			
+			AddWeaponToPlayer(weaponDetails);
+		}
+	}
+
+	public Weapon AddWeaponToPlayer(WeaponDetailsSO weaponDetails)
+	{
+		Weapon weapon = new Weapon() { weaponDetails = weaponDetails, weaponReloadTimer = 0f, weaponClipRemainingAmmo = weaponDetails.weaponClipAmmoCapacity, weaponRemainingAmmo = weaponDetails.weaponAmmoCapacity, isWeaponReloading = false };
+
+		weaponList.Add(weapon);
+		weapon.weaponListPosition = weaponList.Count;		
+		setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
+
+		return weapon;
+
 	}
 }
  

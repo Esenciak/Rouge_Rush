@@ -14,70 +14,83 @@ public class PlayerControl : MonoBehaviour
 
 	#endregion Tooltip
 
+	[SerializeField] private MovementDetailsSO movementDetails;
+
+
+	#region Tooltip
+
+	[Tooltip("The player WeaponShootPosition gameobject in the hieracrchy")]
+
+	#endregion Tooltip
+
 	[SerializeField] private Transform weaponShootPosition;
 
 	private Player player;
-
+	private float moveSpeed;
+	private int currentWeaponIndex = 1;
 
 	private void Awake()
 	{
+		// Load components
 		player = GetComponent<Player>();
-
-		//moveSpeed = movementDetails.GetMoveSpeed();
+		moveSpeed = movementDetails.GetMoveSpeed();
 	}
 
 
-	private void Udpate()
+	private void Start()
 	{
 
-		MovementInput();	// przyciski od movementu
-
-		
-		WeaponInput();		// od broni
-
+		SetStartingWeapon();
 	}
 
+	private void Update()
+	{
 
+		// Process the player movement input
+		MovementInput();
+
+		// Process the player weapon input
+		WeaponInput();
+
+	}
 	private void MovementInput()
 	{
-		// Get movement input
+		player.idleEvent.CallIdleEvent();
+
 		float horizontalMovement = Input.GetAxisRaw("Horizontal");
 		float verticalMovement = Input.GetAxisRaw("Vertical");
-		bool rightMouseButtonDown = Input.GetMouseButtonDown(1);
 
-		// Create a direction vector based on the input
 		Vector2 direction = new Vector2(horizontalMovement, verticalMovement);
 
-		// Adjust distance for diagonal movement (pythagoras approximation)
 		if (horizontalMovement != 0f && verticalMovement != 0f)
 		{
 			direction *= 0.7f;
 		}
 
-		// If there is movement either move or roll
 		if (direction != Vector2.zero)
 		{
-			//if (!rightMouseButtonDown)
-			//{
-			//	// trigger movement event
-			//	player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
-			//}
-			//// else player roll if not cooling down
-			//else if (playerRollCooldownTimer <= 0f)
-			//{
-			//	PlayerRoll((Vector3)direction);
-			//}
-
+			player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
 		}
-		// else trigger idle event
 		else
 		{
 			player.idleEvent.CallIdleEvent();
 		}
 	}
 
+	private void SetStartingWeapon()
+	{
+		int index = 1;
 
-
+		foreach (Weapon weapon in player.weaponList)
+		{
+			if (weapon.weaponDetails == player.playerDetails.startingWeapon)
+			{
+				SetWeaponByIndex(index);
+				break;
+			}
+			index++;
+		}
+	}
 
 	private void WeaponInput()
 	{
@@ -85,30 +98,45 @@ public class PlayerControl : MonoBehaviour
 		float weaponAngleDegrees, playerAngleDegrees;
 		AimDirection playerAimDirection;
 
-		// Aim weapon input
+
 		AimWeaponInput(out weaponDirection, out weaponAngleDegrees, out playerAngleDegrees, out playerAimDirection);
-
-		// Fire weapon input
-		//FireWeaponInput(weaponDirection, weaponAngleDegrees, playerAngleDegrees, playerAimDirection);
-
-		// Switch weapon input
-		//SwitchWeaponInput();
-
-		// Reload weapon input
-		//ReloadWeaponInput();
 	}
 
 	private void AimWeaponInput(out Vector3 weaponDirection, out float weaponAngleDegrees, out float playerAngleDegrees, out AimDirection playerAimDirection)
-    {
-        // Get mouse world position
-        Vector3 mouseWorldPosition = HelperUtilities.GetMouseWorldPosition();
-		weaponDirection = (mouseWorldPosition - weaponShootPosition.position);
-      //  weaponDirection = (mouseWorldPosition - player.activeWeapon.GetShootPosition());
-        Vector3 playerDirection = (mouseWorldPosition - transform.position);
-        weaponAngleDegrees = HelperUtilities.GetAngleFromVector(weaponDirection);
-        playerAngleDegrees = HelperUtilities.GetAngleFromVector(playerDirection);   
-        playerAimDirection = HelperUtilities.GetAimDirection(playerAngleDegrees);
-        player.aimWeaponEvent.CallAimWeaponEvent(playerAimDirection, playerAngleDegrees, weaponAngleDegrees, weaponDirection);
-    }
+	{
 
+
+		Vector3 mouseWorldPosition = HelperUtilities.GetMouseWorldPosition();
+
+
+		weaponDirection = (mouseWorldPosition - player.activeWeapon.GetShootPosition());
+
+		Vector3 playerDirection = (mouseWorldPosition - transform.position);
+
+		weaponAngleDegrees = HelperUtilities.GetAngleFromVector(weaponDirection);
+		playerAngleDegrees = HelperUtilities.GetAngleFromVector(playerDirection);
+		playerAimDirection = HelperUtilities.GetAimDirection(playerAngleDegrees);
+		player.aimWeaponEvent.CallAimWeaponEvent(playerAimDirection, playerAngleDegrees, weaponAngleDegrees, weaponDirection);
+
+	}
+
+	private void SetWeaponByIndex(int weaponIndex)
+	{
+		if (weaponIndex - 1 < player.weaponList.Count)
+		{
+			currentWeaponIndex = weaponIndex;
+			player.setActiveWeaponEvent.CallSetActiveWeaponEvent(player.weaponList[weaponIndex - 1]);
+		}
+	}
+
+
+	#region Validation
+#if UNITY_EDITOR
+	private void OnValidate()
+	{
+		HelperUtilities.ValidateCheckNullValue(this, nameof(movementDetails), movementDetails);
+	}
+#endif
+
+	#endregion Validation
 }

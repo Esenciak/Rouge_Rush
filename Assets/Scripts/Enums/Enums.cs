@@ -6,6 +6,7 @@
 	west,
 	none
 }
+
 public enum AimDirection
 {
 	Up,
@@ -51,4 +52,3 @@ public enum GameState
 	dungeonOverviewMap,
 	restartGame
 }
-
