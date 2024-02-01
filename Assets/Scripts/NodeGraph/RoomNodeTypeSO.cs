@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [CreateAssetMenu(fileName = "RoomNodeType_", menuName = "Scriptable Objects/Dungeon/Room Node Type")]
-
-
 public class RoomNodeTypeSO : ScriptableObject
 {
     public string roomNodeTypeName;
@@ -25,7 +22,7 @@ public class RoomNodeTypeSO : ScriptableObject
     #region Header
     [Header("One Type Should Be A CorridorEW")]
     #endregion Header
-    public bool isCorridorEW; 
+    public bool isCorridorEW;
     #region Header
     [Header("One Type Should Be An Entrance")]
     #endregion Header

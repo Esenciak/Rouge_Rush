@@ -15,13 +15,13 @@ MonoBehaviour:
   guid: 9e3ddbe02c65a394087b4cfa225d98c9
   prefab: {fileID: 4327421925113694216, guid: bf46e90753b706b4dbdca459b74d416a, type: 3}
   previousPrefab: {fileID: 4327421925113694216, guid: bf46e90753b706b4dbdca459b74d416a, type: 3}
-  roomNodeType: {fileID: 11400000, guid: ef29174e5225d8b4193b65fa3126bb8a, type: 2}
+  roomNodeType: {fileID: 11400000, guid: 3262b23e815cd4949b0e6d20b7ff5935, type: 2}
   lowerBounds: {x: -1, y: 0}
   upperBounds: {x: 21, y: 23}
   doorwayList:
   - position: {x: 10, y: 23}
     orientation: 0
-    doorPrefab: {fileID: 2786033554451740407, guid: cf973ecfcaedddc4183fdd3cd68fbb2f, type: 3}
+    doorPrefab: {fileID: 6927665885970513103, guid: 9f72ee17a8328ea4b9820daa39a3c5f1, type: 3}
     doorwayStartCopyPosition: {x: 7, y: 23}
     doorwayCopyTileWidth: 5
     doorwayCopyTileHeight: 8
@@ -29,7 +29,7 @@ MonoBehaviour:
     isUnavailable: 0
   - position: {x: 10, y: 0}
     orientation: 2
-    doorPrefab: {fileID: 2786033554451740407, guid: cf973ecfcaedddc4183fdd3cd68fbb2f, type: 3}
+    doorPrefab: {fileID: 6927665885970513103, guid: 9f72ee17a8328ea4b9820daa39a3c5f1, type: 3}
     doorwayStartCopyPosition: {x: 7, y: 3}
     doorwayCopyTileWidth: 5
     doorwayCopyTileHeight: 4
@@ -37,7 +37,7 @@ MonoBehaviour:
     isUnavailable: 0
   - position: {x: 21, y: 9}
     orientation: 1
-    doorPrefab: {fileID: 8700410189889358998, guid: 5eadd2c369eef794682cdf40caa62a49, type: 3}
+    doorPrefab: {fileID: 5578879441319861494, guid: dbaf977f867362c4fb3f8877012d4b97, type: 3}
     doorwayStartCopyPosition: {x: 18, y: 15}
     doorwayCopyTileWidth: 4
     doorwayCopyTileHeight: 8
@@ -45,7 +45,7 @@ MonoBehaviour:
     isUnavailable: 0
   - position: {x: -1, y: 9}
     orientation: 3
-    doorPrefab: {fileID: 8700410189889358998, guid: 5eadd2c369eef794682cdf40caa62a49, type: 3}
+    doorPrefab: {fileID: 5578879441319861494, guid: dbaf977f867362c4fb3f8877012d4b97, type: 3}
     doorwayStartCopyPosition: {x: -1, y: 15}
     doorwayCopyTileWidth: 4
     doorwayCopyTileHeight: 8

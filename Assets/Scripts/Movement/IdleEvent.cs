@@ -6,10 +6,10 @@ using System;
 [DisallowMultipleComponent]
 public class IdleEvent : MonoBehaviour
 {
-	public event Action<IdleEvent> OnIdle;
+    public event Action<IdleEvent> OnIdle;
 
-	public void CallIdleEvent()
-	{
-		OnIdle?.Invoke(this);
-	}
+    public void CallIdleEvent()
+    {
+        OnIdle?.Invoke(this);
+    }
 }

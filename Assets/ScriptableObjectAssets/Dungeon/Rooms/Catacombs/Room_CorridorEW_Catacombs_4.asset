@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2708e4084c4a1534ba646096300f778c, type: 3}
   m_Name: Room_CorridorEW_Catacombs_4
   m_EditorClassIdentifier: 
-  guid: ae6609ebb86ed73479599e4cae63151e
+  guid: b785656212cdc2643a6ddf0e6f5bc289
   prefab: {fileID: 5351491626515514454, guid: 14663f6e07044fa42b22e4c5bbc709a3, type: 3}
   previousPrefab: {fileID: 5351491626515514454, guid: 14663f6e07044fa42b22e4c5bbc709a3, type: 3}
-  roomNodeType: {fileID: 11400000, guid: d8c454f5fa09c8a418a761ce0ca3ea15, type: 2}
+  roomNodeType: {fileID: 11400000, guid: a9807a7d9133593439abc8b688723727, type: 2}
   lowerBounds: {x: -3, y: -6}
   upperBounds: {x: 27, y: 10}
   doorwayList:
