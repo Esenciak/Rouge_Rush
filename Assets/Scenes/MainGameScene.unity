@@ -487,11 +487,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dungeonLevelList:
   - {fileID: 11400000, guid: b8758f957f5d71840adad21f9bd3d838, type: 2}
-  - {fileID: 11400000, guid: 909009f7abc89d04bbb6ed8e9cd32d9c, type: 2}
-  - {fileID: 11400000, guid: c901330d7cbb877418ef51a1ea9a6891, type: 2}
-  - {fileID: 11400000, guid: 1a8cfb7a1001b2b4bb28df71ea197614, type: 2}
-  - {fileID: 11400000, guid: db97eef24629a514999b7535e9a88f4f, type: 2}
-  - {fileID: 11400000, guid: 2a55dcbad3bc6f342a3564b4e9622784, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   currentDungeonLevelListIndex: 0
   gameState: 0
   previousGameState: 0
@@ -1461,14 +1461,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 46bf0dcf0ce407745bf62c4ca32ae625, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2339,7 +2339,7 @@ MonoBehaviour:
     ModeOverride: 1
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.033238, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2484,7 +2484,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000b521e4d02d0c5f77e74950f2992f09d9c9f11e3d
+  m_ApplyToSortingLayers: 00000000b521e4d02d0c5f77e74950f2992f09d9c9f11e3ded9d1dab
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
