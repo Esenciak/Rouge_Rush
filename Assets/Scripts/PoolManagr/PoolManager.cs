@@ -28,19 +28,19 @@ public class PoolManager : SingletonMonobehaviour<PoolManager>
 		
 		for (int i = 0; i < poolArray.Length; i++)
 		{
-			CreatePool(poolArray[i].prefab, poolArray[i].poolSize, poolArray[i].componentType);
+			//CreatePool(poolArray[i].prefab, poolArray[i].poolSize, poolArray[i].componentType);
 		}
 
 	}
 
-	
+
 	private void CreatePool(GameObject prefab, int poolSize, string componentType)
 	{
 		int poolKey = prefab.GetInstanceID();
 
-		string prefabName = prefab.name; 
+		string prefabName = prefab.name; // get prefab name
 
-		GameObject parentGameObject = new GameObject(prefabName + "Anchor");
+		GameObject parentGameObject = new GameObject(prefabName + "Anchor"); // create parent gameobject to parent the child objects to
 
 		parentGameObject.transform.SetParent(objectPoolTransform);
 

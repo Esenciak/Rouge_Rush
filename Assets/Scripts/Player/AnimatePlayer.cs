@@ -53,8 +53,7 @@ public class AnimatePlayer : MonoBehaviour
 
 	private void SetIdleAnimationParameters()
 	{
-		player.animator.SetBool(Settings.isMoving, false);
-		player.animator.SetBool(Settings.isIdle, true);
+		//player.animator.SetBool(Settings.isIdle, true);
 	}
 
 	private void InitializeAimAnimationParameters()

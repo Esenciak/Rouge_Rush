@@ -718,9 +718,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 1
-    height: 1
+    y: 0.1283148
+    width: 1.141634
+    height: 0.76988876
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1066,7 +1066,7 @@ MonoBehaviour:
   poolArray:
   - poolSize: 30
     prefab: {fileID: 8419101704069559700, guid: 650a9e8b90a3bbb4b8120b239c4692e6, type: 3}
-    componentType: IFirebale
+    componentType: IFireble
 --- !u!4 &1114607458
 Transform:
   m_ObjectHideFlags: 0

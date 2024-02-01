@@ -18,6 +18,9 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(IdleEvent))]
 [RequireComponent(typeof(Idle))]
+[RequireComponent(typeof(FireWeaponEvent))]
+[RequireComponent(typeof(FireWeapon))]
+[RequireComponent(typeof(WeaponFiredEvent))]
 [RequireComponent(typeof(AimWeaponEvent))]
 [RequireComponent(typeof(AimWeapon))]
 [RequireComponent(typeof(MovementByVelocityEvent))]
@@ -38,6 +41,8 @@ public class Player : MonoBehaviour
 	[HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
 	[HideInInspector] public SetActiveWeaponEvent setActiveWeaponEvent;
 	[HideInInspector] public ActiveWeapon activeWeapon;
+	[HideInInspector] public FireWeaponEvent fireWeaponEvent;
+	[HideInInspector] public WeaponFiredEvent weaponFiredEvent;
 
 	public List<Weapon> weaponList = new List<Weapon>();
 
@@ -54,6 +59,8 @@ public class Player : MonoBehaviour
 		movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
 		setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
 		activeWeapon = GetComponent<ActiveWeapon>();
+		fireWeaponEvent = GetComponent<FireWeaponEvent>();
+		weaponFiredEvent = GetComponent<WeaponFiredEvent>();
 	}
 
 	public void Initialize(PlayerDetailsSO playerDetails)
